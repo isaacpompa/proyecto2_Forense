@@ -1,0 +1,95 @@
+%
+%  Reporte. Proyecto 2
+%
+%  Created by Isaac Salvador Hernández Pompa on 2013-11-02.
+%  Owners: Alejandro Cano e Isaac Pompa.
+%
+\documentclass[12pt,twocolumn]{report}
+
+% Use utf-8 encoding for foreign characters
+%\usepackage[utf8]{inputenc}
+
+% Usar idioma, tipografía, entre otras cosas del español
+\usepackage[spanish,activeacute]{babel}
+
+% Para especificar pertenencia a instituciòn
+\usepackage[affil-it]{authblk}
+
+% 
+\usepackage{fontspec}
+
+% Tipografía TIMES NEW ROMAN
+\setmainfont{Times New Roman}
+
+% Setup for fullpage use
+\usepackage{fullpage}
+
+% Uncomment some of the following if you use the features
+%
+% Running Headers and footers
+%\usepackage{fancyhdr}
+
+% Multipart figures
+%\usepackage{subfigure}
+
+% More symbols
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{latexsym}
+
+% Surround parts of graphics with box
+\usepackage{boxedminipage}
+
+% Package for including code in the document
+\usepackage{listings}
+
+% If you want to generate a toc for each chapter (use with book)
+\usepackage{minitoc}
+
+% This is now the recommended way for checking for PDFLaTeX:
+\usepackage{ifpdf}
+
+%\newif\ifpdf
+%\ifx\pdfoutput\undefined
+%\pdffalse % we are not running PDFLaTeX
+%\else
+%\pdfoutput=1 % we are running PDFLaTeX
+%\pdftrue
+%\fi
+
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+\title{"Título, describe el contenido del trabajo"}
+\author{Alejandro Cano,   Isaac Hernández}  % OJO no está respetando el doble espacio 
+\affil{Universidad Nacional Autónoma de México}
+
+\date{ }%15 de noviembre de 2013}
+
+\begin{document}
+
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg, .tif}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\maketitle
+
+
+\begin{abstract}
+\end{abstract}
+% ++++++++ Aquí empieza el CONTENIDO del reporte ++++++++++
+\section{Introducción}
+
+La práctica me deja el conocimiento de cómo extraer elementos u objetos HTTP de capturas de paquetes para su posterior análisis.
+También el uso de otras herramientas fuera del entorno UNIX/LINUX para análisis de paquetes, tal es el caso de TCPView. El análisis
+del \texttt{md5sum} para verificar si un archivo ha sido modificado o no. Saber que es posible "emular" programas exclusivos de Windows
+por medio de la herramienta \texttt{mono}.
+El sistema operativo que se ocupó para realizar las diversas pruebas fue Windows XP.
+
+\bibliographystyle{plain}
+\bibliography{}
+\end{document}
