@@ -49,6 +49,11 @@
 % This is now the recommended way for checking for PDFLaTeX:
 \usepackage{ifpdf}
 
+%
+\usepackage{ textcomp }
+
+\usepackage{ amssymb }
+
 %\newif\ifpdf
 %\ifx\pdfoutput\undefined
 %\pdffalse % we are not running PDFLaTeX
@@ -133,8 +138,168 @@ instalación). Un teléfono móvil con las siguientes características:
 \item Tener unas cuantas imágenes y/o videos.
 \end{enumerate}
 
-También se necesita un punto de acceso para trabajar sobre una LAN.
+Además una máquina virtual con Debian 7 de 32 bits y un punto de acceso para trabajar sobre una LAN.
 
+\subsubsection{Instalando Metasploit Framework}
+En una terminal con permisos de superusuario escribir los siguientes comandos, actualización de repositorios:
+
+\begin{lstlisting}
+apt-get update
+\end{lstlisting}
+
+
+Ahora instalaremos las dependencias para \texttt{Metasploit Framework}:
+
+\begin{lstlisting}
+apt-get -y install
+ build-essential
+ libreadline-dev  libssl-dev
+ libpq5 libpq-dev libreadline5
+ libsqlite3-dev libpcap-dev
+ openjdk-7-jre subversion
+ git-core autoconf postgresql
+ pgadmin3 curl zlib1g-dev
+ libxml2-dev libxslt1-dev
+ vncviewer libyaml-dev
+ ruby1.9.3
+\end{lstlisting}
+
+
+A continuación instalaremos bibliotecas de Ruby de las cuales depende metasploit:
+
+\begin{lstlisting}
+gem install wirble sqlite3 bundler
+\end{lstlisting}
+
+
+\subsubsection{Instalando herramienta de escaneos Nmap}
+
+\begin{lstlisting}
+mkdir ~/Development
+cd ~/Development
+svn co https://svn.nmap.org/nmap
+cd nmap
+./configure
+make
+sudo make install
+make clean
+\end{lstlisting}
+
+
+\subsubsection{Configurando el servidor de Postgre SQL}
+
+Usamos el usuario de postgres para crear la base de datos que usaremos para metasploit
+
+\begin{lstlisting}
+su postres
+\end{lstlisting}
+
+
+Ahora crearemos la base de datos:
+
+\begin{lstlisting}
+createuser msf -P -S -R -D
+
+createdb -O msf msf
+
+exit
+\end{lstlisting}
+
+
+\subsubsection{Instalando el Framework de Metasploit}
+
+Descargaremos los fuente desde Git para poder usar el comando \texttt{msfupdate} y estar siempre actualizados
+
+\begin{lstlisting}
+cd /opt
+
+git clone
+ https://github.com/rapid7/
+metasploit-framework.git
+
+cd metasploit-framework
+\end{lstlisting}
+
+\subsubsection{Instalando armitage}
+\begin{lstlisting}
+curl -# -o /tmp/armitage.tgz
+ http://www.fastandeasyhack
+ing.com/download/armitage
+-latest.tgz
+
+tar -xvzf /tmp/armitage.tgz
+ -C /opt
+
+ln -s /opt/armitage/armitage
+ /usr/local/bin/armitage
+
+ln -s /opt/armitage/teamserver
+ /usr/local/bin/teamserver
+
+echo java -jar /usr/local
+/share/armitage/armitage.jar
+ \$\* > /usr/local/share/
+armitage/armitage
+
+perl -pi -e 's/armitage.jar/
+\/usr\/local\/share\/armitage
+\/armitage.jar/g' /usr/local
+/share/armitage/teamserver
+\end{lstlisting}
+
+Usaremos Bundler Gem para soportar apropiadamente las versiones de la Gema:
+
+\begin{lstlisting}
+bundle install
+
+cd metasploit-framework
+ bundle install
+\end{lstlisting}
+
+
+A continuación crearemos el archivo de la base de datos que contendrá los parámetros de configuración que usaremos para el 
+framework:
+
+\begin{lstlisting}
+vim /opt/metasploit-framework/
+database.yml
+\end{lstlisting}
+
+
+Copiar correctamente estas entradas YAML y asegúrate de proporcionar el password que asignaste al momento de la instalación de la 
+base de datos:
+
+\begin{lstlisting}
+production:
+   adapter: postgresql
+   database: msf
+   username: msf
+   password: 
+   host: 127.0.0.1
+   port: 5432
+   pool: 75
+   timeout: 5
+\end{lstlisting}
+
+Crea la variable de ambiente para tanto Armitage como msfconsole corran en tu shell actual:
+\begin{lstlisting}
+sh -c echo export MSF_DATABASE_
+CONFIG=/opt/metasploit-framework/
+database.yml >> /etc/profile
+\end{lstlisting}
+
+\begin{lstlisting}
+cd /opt/metasploit-framework/external/
+pcaprub
+
+sudo ruby extconf.rb && sudo make &&
+ sudo make install
+\end{lstlisting}
+
+Probamos que funcione:
+\begin{lstlisting}
+msfconsole
+\end{lstlisting}
 
 \bibliographystyle{plain}
 \bibliography{}
