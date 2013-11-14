@@ -84,11 +84,57 @@
 % ++++++++ Aquí empieza el CONTENIDO del reporte ++++++++++
 \section{Introducción}
 
-La práctica me deja el conocimiento de cómo extraer elementos u objetos HTTP de capturas de paquetes para su posterior análisis.
-También el uso de otras herramientas fuera del entorno UNIX/LINUX para análisis de paquetes, tal es el caso de TCPView. El análisis
-del \texttt{md5sum} para verificar si un archivo ha sido modificado o no. Saber que es posible "emular" programas exclusivos de Windows
-por medio de la herramienta \texttt{mono}.
-El sistema operativo que se ocupó para realizar las diversas pruebas fue Windows XP.
+El uso de teléfonos móviles sea ha incrementado en los últimos años, por eso es de suma importancia 
+considerarlos dentro de los dispositivos candidatos a ser atacados a través de vulnerabilidades en su sistema 
+operativo. El \textbf{Android Open Source Proyect} creado por la empresa \textbf{Google} representa alrededor 
+del 70\% de los sistemas operativos para telefonía móvil seguido por el \textbf{iOS} de \textbf{Apple}.
+El ataque del día cero o zero-day attack es uno de los más poderosos en el sentido de que se obtienen 
+privilegios de superusuario en el sistema infectado, esto otorga al atacante un amplio espectro de facilidades 
+para conocer el estado actual del sistema y la facilidad de alterarlo para su propio beneficio entre los que destacan
+el robo de información confidencial como bases de datos, passwords, instalación y ejecución de malware. También se 
+puede acceder a otros equipos (vía el equipo infectado) para ampliar la zona de infección. El zero-day attack 
+tiene la característica de explotar las vulnerabilidades aún desconocidas por el fabricante de dicho sistema, 
+de ahí proviene su nombre. Dentro de los dispositivos móviles, más específicamente en los Android, actualmente 
+(En Julio de 2013) vio luz pública un exploit para ganar privilegios dentro del sistema. A esto se le conoce como 
+un $"$Master Key$"$. Esto funciona como una llave maestra que permite al atacante acceder vía remota y con privilegios 
+a todo el árbol de directorios del dispositivo, permite subir y bajar archivos o directorios completos, hacer uso del 
+hardware como por ejemplo el micrófono y la(s) cámara(s). El modo de infección adoptado por los atacantes es por medio 
+de un archivo \texttt{.APK} .
+
+\section{Literatura}
+Este ataque se clasifica como activo en el cual puede haber interrupción, modificación, suplantación y destrucción. Se 
+cataloga como un ataque interno que se ejecuta desde la APK infectada debido a que no se rompen las firmas criptográficas 
+de la aplicación lo que aparenta no tener código malicioso dentro de ella. La vulnerabilidad se podría remontar a las primeras
+versiones de Android según TheHackerNews. Expertos en seguridad recomiendan sólo la instalación de aplicaciones provenientes de 
+Google Play, de fuentes legítimas, verificar que el nombre del desarrollador sea válido y configurar el teléfono para que no 
+instale aplicaciones de fuentes desconocidas.
+
+Nos basaremos en la pila de vulnerabilidades y ataques para describir el ataque. Ubicándonos en la capa ocho de la pila de 
+vulnerabilidades se usa ingeniería social para 
+convencer al usuario de la necesidad de cierto tipo de aplicación para que su dispositivo pueda ejecutar (por ejemplo flash), 
+mejorar el rendimiento del dispositivo, la necesidad de un $"$Antivirus$"$, etc. Después respectivo a la capa siete de la pila 
+se ejecuta software malicioso a nivel de aplicación que realiza una conexión a un servidor previamente configurado por un puerto 
+desconocido para que se obtenga acceso remotamente. Es un ataque silencioso que mientras la aplicación esté en ejecución se podrá
+obtener acceso al sistema, cabe destacar que al momento de la conexión y una vez establecida no se necesita ningún tipo de 
+autenticación que permitan la entrada al sistema. Este ataque también se encuentra en la capa cuatro de la pila, ya que, 
+remotamente se pueden listar los servicios que el teléfono tiene actualmente levantados. De la capa uno y dos, podemos encontrar 
+que se pueden realizar escaneos pasivamente, extracción de archivos como bases de datos, imágenes, videos, etc. Así como activar
+el micrófono por periodos de tiempo prolongados y también hacer uso de la(s) cámara(s).
+
+\section{Materiales y métodos}
+\subsection{Requerimientos necesarios}
+Para la reconstrucción del ataque en un ambiente controlado necesitamos la suite de metasploit(describir el proceso de 
+instalación). Un teléfono móvil con las siguientes características:
+\begin{enumerate}
+\item Sistema operativo Android.
+\item Contar con por lo menos una cámara.
+\item Contar con conectividad Wi-Fi.
+\item Tener por lo menos una aplicación que almacene en archivos locales su base de datos, por ejemplo WhatsApp.
+\item Tener unas cuantas imágenes y/o videos.
+\end{enumerate}
+
+También se necesita un punto de acceso para trabajar sobre una LAN.
+
 
 \bibliographystyle{plain}
 \bibliography{}
